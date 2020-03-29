@@ -5,3 +5,4 @@ jinja2==2.11.1
 markupsafe==1.1.1
 werkzeug==1.0.0
 flask_cors==3.0.0
+gunicorn==20.0.4
