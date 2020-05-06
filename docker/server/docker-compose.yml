@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+  db:
+    image: "mcr.microsoft.com/mssql/server:latest"
+    container_name: microsoft_sql_photochnaja
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "password1/"
+    ports:
+      - 1433:1433
