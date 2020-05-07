@@ -10,3 +10,10 @@ services:
       SA_PASSWORD: "password1/"
     ports:
       - 1433:1433
+  storage:
+    image: "mcr.microsoft.com/azure-storage/azurite"
+    container_name: azure_storage_photochnaja
+    restart: always
+    ports:
+      - 10000:10000
+      - 10001:10001
