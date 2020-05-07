@@ -9,3 +9,4 @@ gunicorn==20.0.4
 pyodbc==4.0.30
 SQLAlchemy==1.3.16
 PyJWT==1.7.1
+azure-storage-blob==12.3.1

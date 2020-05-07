@@ -33,3 +33,11 @@ if not DATABASE_DRIVER:
 SQLALCHEMY_DATABASE_URI = 'mssql+pyodbc://{}:{}@{}:{}/{}?driver={}'.format(
     DATABASE_USER, DATABASE_PASSWORD, DATABASE_HOST, DATABASE_PORT,
     DATABASE_NAME, DATABASE_DRIVER)
+
+###########
+# STORAGE #
+###########
+
+STORAGE_CONNECTION_STRING = 'DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;'
+if not STORAGE_CONNECTION_STRING:
+    STORAGE_CONNECTION_STRING = os.environ['STORAGE_CONNECTION_STRING']
