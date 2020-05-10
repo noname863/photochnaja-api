@@ -83,6 +83,27 @@ def login():
     return jsonify({'token': token.decode('UTF-8')})
 
 
+@app.route('/photocards', methods=['GET'])
+@cross_origin()
+@token_required
+def get_files(current_user):
+    blob_service_client = BlobServiceClient.from_connection_string(
+        STORAGE_CONNECTION_STRING)
+
+    container_name = current_user.login
+    container_client = blob_service_client.get_container_client(container_name)
+    if not any(container.name == container_name for container in
+               blob_service_client.list_containers()):
+        container_client.create_container(public_access=PublicAccess.Blob)
+
+    photoCards = []
+    for blob in container_client.list_blobs():
+        blob_client = container_client.get_blob_client(blob.name)
+        photoCards.append(
+            {'name': blob_client.blob_name, 'url': blob_client.url})
+    return jsonify({'photoCards': photoCards})
+
+
 @app.route('/photocards', methods=['POST'])
 @cross_origin()
 @token_required
