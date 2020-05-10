@@ -109,3 +109,21 @@ def upload_files(current_user):
             content_type='image/' + file_extension[1:],
             content_disposition='attachment;filename=' + filename))
     return jsonify({'number_files': len(files)})
+
+
+@app.route('/photocards', methods=['DELETE'])
+@cross_origin()
+@token_required
+def delete_file(current_user):
+    blob_service_client = BlobServiceClient.from_connection_string(
+        STORAGE_CONNECTION_STRING)
+
+    container_name = current_user.login
+    container_client = blob_service_client.get_container_client(container_name)
+    if not any(container.name == container_name for container in
+               blob_service_client.list_containers()):
+        container_client.create_container(public_access=PublicAccess.Blob)
+
+    blob_client = container_client.get_blob_client(request.args.get('name'))
+    blob_client.delete_blob()
+    return jsonify({'number_files': 1, 'name': blob_client.blob_name})
