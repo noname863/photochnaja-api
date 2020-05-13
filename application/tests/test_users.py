@@ -27,3 +27,22 @@ class BasicTests(unittest.TestCase):
     # executed after each test
     def tearDown(self):
         db.drop_all()
+
+    ###############
+    #### tests ####
+    ###############
+
+    def test_user_signup(self):
+        with app.app_context():
+            user_map = {'email': 'test@mail.ru',
+                        'login': 'test_login',
+                        'password': 'test_password'}
+            response = self.app.post('/signup',
+                                     data=json.dumps(user_map),
+                                     content_type='application/json')
+            self.assertEqual(response.status_code, 201)
+            response_user = json.loads(response.get_data(as_text=True))
+            self.assertEqual(response_user['email'], user_map['email'])
+            self.assertEqual(response_user['login'], user_map['login'])
+            if __name__ == "__main__":
+                unittest.main()
