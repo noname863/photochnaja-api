@@ -49,6 +49,12 @@ def token_required(f):
     return _verify
 
 
+@app.route('/', methods=['GET'])
+@cross_origin()
+def index():
+    return jsonify({'status': 'initialized'})
+
+
 @app.route('/signup', methods=['POST'])
 @cross_origin()
 def signup():
