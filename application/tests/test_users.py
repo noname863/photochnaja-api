@@ -46,3 +46,22 @@ class BasicTests(unittest.TestCase):
             self.assertEqual(response_user['login'], user_map['login'])
             if __name__ == "__main__":
                 unittest.main()
+
+    def test_user_signin(self):
+        with app.app_context():
+            user_map = {'email': 'test@mail.ru',
+                        'login': 'test_login',
+                        'password': 'test_password'}
+            self.app.post('/signup',
+                          data=json.dumps(user_map),
+                          content_type='application/json')
+
+            response = self.app.post('/signin',
+                                     data=json.dumps(
+                                         {'login': user_map['login'],
+                                          'password': user_map['password']}),
+                                     content_type='application/json')
+
+            self.assertEqual(response.status_code, 200)
+            self.assertIsNotNone(
+                json.loads(response.get_data(as_text=True))['token'])
