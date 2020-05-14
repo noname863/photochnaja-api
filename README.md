@@ -19,9 +19,11 @@
 <!-- vim-markdown-toc -->
 ## Development
 ### Configuring application
-1. To configure development environment (create virtualenv, install packages from `requirements.txt` ) run script `configure.sh` for _Unix_ systems and `configure.cmd` for _Windows_;
+1. To configure development environment (create virtual end, install packages from `requirements.txt` ) run script `configure.sh` for _Unix_ systems and `configure.cmd` for _Windows_;
 
 2. Before running application it's necessary to set variables for `flask` application in `application/setting.py`:
+
+	__Variables are set from the operating system environment if any of them is empty then variable is set directly with default value (default values are in `application/settings.py` file).__
 
 	__Variables:__
 
@@ -42,7 +44,11 @@
 	+ `DATABASE_PORT` - port of database server. F.ex. `DATABASE_PORT = '1433'`;
 	+ `DATABASE_NAME` - name of database. F.ex. `DATABASE_NAME = 'photoviewer_db'`;
 	+ `DATABASE_DRIVER` - name of dirver for database. F.ex. `DATABASE_DRIVER = 'ODBC+Driver+17+for+SQL+Server'`;
-	+ `SQLALCHEMY_DATABASE_URI` - union of all previous varibales in single database connection string. Value should be in `app.config['SQLALCHEMY_DATABASE_URI']`.
+	+ `SQLALCHEMY_DATABASE_URI` - union of all previous varibales in single database connection string. Value should be in `app.config['SQLALCHEMY_DATABASE_URI']`;
+	+ `TEST_DATABASE_NAME` - name of database, that will be used in test. F.ex. `TEST_DATABASE_NAME = 'photochnaja_db_test'`;
+	+ `TEST_DATABASE_URI` - union of all previous varibales (with database from variable `TEST_DATABASE_NAME`) in single database connection string;
+	+ `INITIAL_DATABASE_NAME` - every database managment system has default tables. This variable contains some default table to get initial database connection in application. Such functionality can be used to create necessary databases in application, when no user database is created. F.ex. `INITIAL_DATABASE_NAME = 'master'` (for Microsoft SQL Server);
+	+ `INITIAL_DATABASE_URI` - union of all previous varibales (with database from variable `INITIAL_DATABASE_NAME`) in single database connection string.
 
 	_Storage_:
 
@@ -67,7 +73,7 @@ Microsoft SQL Server is used as database in project because application is aimed
 ##### Azurite
 Azurite is used as blob storage in project. It's cross platform local implementation of _Azure Blob storage_.
 
-To connect to _auzrite_ use the following command:
+To connect to _azurite_ use the following command:
 
 ```sh
 docker exec -it azure_storage_photochnaja sh
