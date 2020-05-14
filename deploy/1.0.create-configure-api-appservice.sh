@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source 0.0.create-resource-group.sh
+source 1.1.create-api-appservice-plan.sh
+source 1.2.create-api-appservice.sh
+source 1.3.configure-startup-file.sh
+#source 1.4.configure-deployment-source.sh
+source 1.5.configure-https-only.sh
+
+eval $post_command_create_api
