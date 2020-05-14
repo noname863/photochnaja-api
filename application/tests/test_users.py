@@ -1,36 +1,36 @@
 import json
 import unittest
 
+import sqlalchemy
+
 from application import app, db
 
-TEST_DB = 'test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = app.config['TEST_DATABASE_URI']
 
 
 class BasicTests(unittest.TestCase):
 
-    ############################
-    #### setup and teardown ####
-    ############################
+    @classmethod
+    def setUpClass(cls):
+        with sqlalchemy.create_engine(
+                app.config['INITIAL_DATABASE_URI'],
+                isolation_level='AUTOCOMMIT'
+        ).connect() as connection:
+            connection.execute(
+                'CREATE DATABASE ' + app.config['TEST_DATABASE_NAME'])
 
-    # executed prior to each test
     def setUp(self):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['DEBUG'] = False
-        print(app.config['SQLALCHEMY_DATABASE_URI'])
         self.app = app.test_client()
         db.drop_all()
         db.create_all()
 
         self.assertEqual(app.debug, False)
 
-    # executed after each test
     def tearDown(self):
         db.drop_all()
-
-    ###############
-    #### tests ####
-    ###############
 
     def test_user_signup(self):
         with app.app_context():
@@ -44,8 +44,6 @@ class BasicTests(unittest.TestCase):
             response_user = json.loads(response.get_data(as_text=True))
             self.assertEqual(response_user['email'], user_map['email'])
             self.assertEqual(response_user['login'], user_map['login'])
-            if __name__ == "__main__":
-                unittest.main()
 
     def test_user_signin(self):
         with app.app_context():
@@ -65,3 +63,7 @@ class BasicTests(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertIsNotNone(
                 json.loads(response.get_data(as_text=True))['token'])
+
+
+if __name__ == "__main__":
+    unittest.main()
