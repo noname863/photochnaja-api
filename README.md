@@ -10,7 +10,8 @@
 			* [Azurite](#azurite)
 * [Requirements](#requirements)
 	* [1. Python 3.7+](#1-python-37)
-	* [2. Python SQL Driver - pyodbc](#2-python-sql-driver---pyodbc)
+	* [2. Pyodbc](#2-pyodbc)
+	* [3. ODBC Driver 17 for SQL Server](#3-odbc-driver-17-for-sql-server)
 		* [Installation](#installation)
 			* [Windows](#windows)
 			* [Linux (Debian)](#linux-debian)
@@ -83,7 +84,19 @@ docker exec -it azure_storage_photochnaja sh
 
 ### 1. Python 3.7+
 
-### 2. Python SQL Driver - pyodbc
+### 2. Pyodbc
+To install python package from `requirements.txt` you should execute the following commands:
+
+```sh
+sudo apt update
+sudo apt install g++
+sudo apt install unixodbc-dev
+
+sudo apt install unixodbc
+sudo apt install libodbc1
+```
+
+### 3. ODBC Driver 17 for SQL Server
 The application use `MS SQL Server`. It's necessary to have 
 `ODBC Driver 17 for SQL Server`. You can read [more](https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/python-sql-driver-pyodbc?view=sql-server-ver15).
 
