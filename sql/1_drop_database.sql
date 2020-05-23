@@ -1,0 +1,1 @@
+DROP DATABASE IF EXISTS photochnaja_db;
