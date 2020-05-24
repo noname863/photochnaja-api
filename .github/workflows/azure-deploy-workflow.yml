@@ -5,10 +5,10 @@ name: CI
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  pull_request:
-    branches: '**'
+  push:
+    branches: [ master ]
   repository_dispatch:
-    types: [ start-pull-request-workflow ]
+    types: [ start-azure-deploy-workflow ]
 
 env:
   AZURE_WEBAPP_NAME: photochnaja-tku-api # set this to your application's name
@@ -45,3 +45,10 @@ jobs:
 
       - name: Run tests
         run: python -m unittest -v application/tests/*
+
+      - name: Deploy Web App using GH Action azure/webapps-deploy
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.SCM_CREDENTIALS }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
