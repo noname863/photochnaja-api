@@ -43,3 +43,10 @@ az webapp config appsettings set \
   --name $m_api \
   --resource-group $m_group \
   --settings DATABASE_DRIVER="ODBC+Driver+17+for+SQL+Server"
+
+# Set STORAGE_CONNECTION_STRING variable
+echo -e "\n-----Setting STORAGE_CONNECTION_STRING variable:"
+az webapp config appsettings set \
+  --name $m_api \
+  --resource-group $m_group \
+  --settings STORAGE_CONNECTION_STRING=$m_api_storage_conn_string
