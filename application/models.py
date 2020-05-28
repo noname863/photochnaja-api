@@ -7,7 +7,7 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String(32), unique=True, nullable=False)
-    password = db.Column(db.String(32))
+    password = db.Column(db.String(80))
     email = db.Column(db.String(32), unique=True, nullable=False)
 
     def __init__(self, login, password, email):
